@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit_lottie as st_lottie
 import requests
-
+ import validators
 import request_handling
 
 
@@ -35,11 +35,10 @@ def load_lottieurl(url):
 
 
 def creating_img():
-    videos = st.file_uploader("Задача ясна! Теперь необходимо прикрепит файлу с контентом.",
-                             type="mp4", accept_multiple_files=True)
-    if videos is not None:
-        for video in videos:
-            st.video(video)
+    link = st.text_input("Задача ясна! Теперь необходимо прикрепит ссылку на файл с контентом.")
+    if not validators.url(link):
+        creating_img()
+        
 
     st.write("##")
     st.write("Файлы загружены! Теперь к тематике.")
