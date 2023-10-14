@@ -1,9 +1,11 @@
+import requests
+from tempfile import NamedTemporaryFile
+
 import streamlit as st
 import streamlit_lottie as st_lottie
-import requests
 
 import request_handling
-
+import text_processing
 
 st.set_page_config(page_title="Генерация обложек к видео и аватарок канала с помощью ИИ.", layout="wide")
 
@@ -72,14 +74,16 @@ def creating_img():
     st.write("##")
     st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
 
-    # обернули вызов обработчика в лямбду
-    gen_button_handler = lambda video_path, text: request_handling.process(video_path,
-                                                                           subject_matter,
-                                                                           text,
-                                                                           images)
+    # обернули вызов обработчика
+    def generation_handler():
+
+        # временный файл для видео
+        with NamedTemporaryFile(dir='temp', suffix='.mp4') as video:
+            video.write(videos[0].getbuffer())
+            request_handling.process(video.name, subject_matter, keywords, images)
     
     # тут надо вызывать
-    start_btn = st.button("Начать генерацию!", on_click=gen_button_handler)
+    start_btn = st.button("Начать генерацию!", on_click=generation_handler)
 
 
 lottie_coding = load_lottieurl("https://lottie.host/77556afe-9041-4589-87d7-adb0a2fdc4d0/aEKCuzSaHO.json")
