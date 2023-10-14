@@ -2,6 +2,9 @@ import streamlit as st
 import streamlit_lottie as st_lottie
 import requests
 
+import request_handling
+
+
 st.set_page_config(page_title="Генерация обложек к видео и аватарок канала с помощью ИИ.", layout="wide")
 
 st.markdown("""
@@ -45,12 +48,14 @@ def creating_img():
                                              "Смешные видео",
                                              "Шопинг",
                                              "Распаковка посылок",
-                                             "Паранки",
+                                             "Пранки",
                                              "Кулинария",
                                              "Спорт",
                                              "Новости"))
+    
     st.write("##")
     keywords = st.text_input("Есть ли ключевые слова, которые ты бы хотел указать в описании к видео?")
+
     st.write("##")
     images = st.file_uploader("Можешь прикрепить желаемые картинки для твоего изображения. Они будут добавлены на фото",
                               type=["png", "jpg"],
@@ -61,11 +66,18 @@ def creating_img():
 
     st.write("##")
     st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
-    start_btn = st.button("Начать генерацию!", on_click=btn_click)
+
+    # обернули вызов обработчика в лямбду
+    gen_button_handler = lambda video_path, text: request_handling.process(path_to_video: str, 
+                                                                           subject_matter: list
+                                                                           keywords: str
+                                                                           images: list)
+    
+    # тут надо вызывать
+    start_btn = st.button("Начать генерацию!", on_click=gen_button_handler)
 
 
 lottie_coding = load_lottieurl("https://lottie.host/77556afe-9041-4589-87d7-adb0a2fdc4d0/aEKCuzSaHO.json")
-
 
 
 # --- Секция заголовков ---
@@ -97,10 +109,6 @@ if task == "Сгенерировать банера для страницы ка
 lottie_loading = load_lottieurl("https://lottie.host/6056169b-b5e0-4763-803d-77e0a97e52b5/FmTPJdKcor.json")
 
 
-def btn_click(img_list):
-    st.lottie(lottie_loading, height=50)
-    for image_path in img_list:
-        st.image(image_path)
 
     contact_forms = """
 <form action="https://formsubmit.co/your@email.com" method="POST">
