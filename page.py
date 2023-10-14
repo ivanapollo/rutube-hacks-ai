@@ -68,10 +68,10 @@ def creating_img():
     st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
 
     # обернули вызов обработчика в лямбду
-    gen_button_handler = lambda video_path, text: request_handling.process(path_to_video: str, 
-                                                                           subject_matter: list
-                                                                           keywords: str
-                                                                           images: list)
+    gen_button_handler = lambda video_path, text: request_handling.process(video_path,
+                                                                           subject_matter,
+                                                                           text,
+                                                                           images)
     
     # тут надо вызывать
     start_btn = st.button("Начать генерацию!", on_click=gen_button_handler)
@@ -108,13 +108,10 @@ if task == "Сгенерировать банера для страницы ка
 
 lottie_loading = load_lottieurl("https://lottie.host/6056169b-b5e0-4763-803d-77e0a97e52b5/FmTPJdKcor.json")
 
-
-
-    contact_forms = """
+contact_forms = """
 <form action="https://formsubmit.co/your@email.com" method="POST">
      <input type="text" name="name" required>
      <input type="email" name="email" required>
      <button type="submit">Send</button>
 </form>
-    """
-
+"""
