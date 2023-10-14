@@ -3,7 +3,7 @@ import streamlit_lottie as st_lottie
 import requests
 
 import request_handling
-
+from add_text import add_text
 
 st.set_page_config(page_title="Генерация обложек к видео и аватарок канала с помощью ИИ.", layout="wide")
 
@@ -68,6 +68,25 @@ def creating_img():
     if images is not None:
         for image in images:
             st.image(image)
+    st.write("##")
+    title_img = st.text_input("Хотите ли добавить надпись на готовое изображение?")
+
+    if title_img:
+        subject_matter = st.multiselect("Выберите шрифт для надписи",
+                                        options=("TimesNewRoman.ttf",
+                                                    "Georgia.ttf",
+                                                    "Arial.ttf",
+                                                    "ArialBlack.ttf",
+                                                    "Tahoma.ttf",
+                                                    "Verdana.ttf",
+                                                    "TrebuchetMS.ttf",
+                                                    "LucidaSansUnicode.ttf",
+                                                    "Impact.ttf",
+                                                    "ComicSansMS.ttf",
+                                                    "CourierNew.ttf",
+                                                    "LucidaConsole.ttf",))
+        color = st.color_picker('Выберете цвет шрифта', '#000000')
+        add_text()
 
     st.write("##")
     st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
