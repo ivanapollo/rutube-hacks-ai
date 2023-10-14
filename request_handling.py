@@ -2,7 +2,10 @@ import requests
 import os
 import base64
 
-import get_frames
+from get_frames import *
+
+api = 'http://127.0.0.1:7860'
+
 
 def process(path_to_video: str,
             subject_matter: list,
@@ -10,9 +13,17 @@ def process(path_to_video: str,
             images: list):
     
     # TODO: вызываю Толю, разбиваем видео на кадры
-    frames_path = get_frames.get_frames(path_to_video, 'temp')
+    frame_paths = get_frames(path_to_video, './temp')
 
+    ret_list = []
 
+    for path in frame_paths:
+        print(path)
+        ret_list.append(
+            img2img(api, keywords, 15, path)
+        )
+
+    return ret_list
 
     # TODO: вызываю Настю, удаляем плохие слова
 
@@ -20,7 +31,6 @@ def process(path_to_video: str,
     # for image_path in img_list:
     #     st.image(image_path)
 
-api = 'http://127.0.0.1:7860'
 
 def img2img(api, text, steps, image_path):
 
@@ -52,15 +62,14 @@ def img2img(api, text, steps, image_path):
         encoded_result = sd_response["images"][0]
         result_data = base64.b64decode(encoded_result)
         
-        output_path = f"temp/{name}.jpg" 
+        output_path = f"results/{name}.jpg" 
         with open(output_path, 'wb') as file:
             file.write(result_data)
 
-        return name
+        return output_path
+    
     else:
         print("Ошибка при выполнении запроса:", sd_response.text)
         return None
 
-prompt = int(input())
-print(img2img(api, prompt, 15, '1.jpeg'))
-
+print(process('/home/stdf/Desktop/12.mp4', [], 'guy with a sport car', []))
