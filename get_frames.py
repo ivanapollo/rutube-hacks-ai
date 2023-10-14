@@ -21,7 +21,7 @@ def get_frames(filename, out_path):
 			paths.append(imgpath)
 		else:
 			print("Ошибка получения кадра")
-			exit()
+			return []
 
 	return(paths)
 
