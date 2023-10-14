@@ -21,6 +21,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+local_css('style/style.css')
 
 def load_lottieurl(url):
     r = requests.get(url)
@@ -109,9 +114,17 @@ if task == "Сгенерировать банера для страницы ка
 lottie_loading = load_lottieurl("https://lottie.host/6056169b-b5e0-4763-803d-77e0a97e52b5/FmTPJdKcor.json")
 
 contact_forms = """
-<form action="https://formsubmit.co/your@email.com" method="POST">
-     <input type="text" name="name" required>
-     <input type="email" name="email" required>
-     <button type="submit">Send</button>
+<form action="https://formsubmit.co/vichka.privalova.05@mail.ru" method="POST">
+     <input type="hidden" name="_captcha" value="false">
+     <input type="text" name="name" placeholder="Ваше имя" required>
+     <input type="email" name="email" placeholder="Ваш email" required>
+     <textarea name="message" placeholder="Введите сообщение"></textarea>
+     <button type="submit">Отправить сообщение</button>
 </form>
-"""
+    """
+
+lf_col, rig_col = st.columns(2)
+with lf_col:
+    st.markdown(contact_forms, unsafe_allow_html=True)
+with rig_col:
+    st.empty()
