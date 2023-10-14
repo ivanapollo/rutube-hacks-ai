@@ -2,6 +2,8 @@ import requests
 import os
 import base64
 
+import streamlit as st
+
 from get_frames import *
 
 api = 'http://127.0.0.1:7860'
@@ -12,24 +14,22 @@ def process(path_to_video: str,
             keywords: str,
             images: list):
     
+    # st.lottie(lottie_loading, height=50)
+    
     # TODO: вызываю Толю, разбиваем видео на кадры
+    print(path_to_video)
     frame_paths = get_frames(path_to_video, './temp')
 
     ret_list = []
 
     for path in frame_paths:
-        print(path)
-        ret_list.append(
-            img2img(api, keywords, 15, path)
-        )
+        gen_path = img2img(api, keywords, 15, path)
+        ret_list.append(gen_path)
+        st.image(gen_path)
 
     return ret_list
 
     # TODO: вызываю Настю, удаляем плохие слова
-
-    # st.lottie(lottie_loading, height=50)
-    # for image_path in img_list:
-    #     st.image(image_path)
 
 
 def img2img(api, text, steps, image_path):
@@ -72,4 +72,4 @@ def img2img(api, text, steps, image_path):
         print("Ошибка при выполнении запроса:", sd_response.text)
         return None
 
-print(process('/home/stdf/Desktop/12.mp4', [], 'guy with a sport car', []))
+# print(process('/home/stdf/Desktop/12.mp4', [], 'guy with a sport car', []))
