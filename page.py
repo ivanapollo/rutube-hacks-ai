@@ -1,9 +1,8 @@
 import streamlit as st
 import streamlit_lottie as st_lottie
 import requests
-
 import request_handling
-
+from add_text import add_text
 
 st.set_page_config(page_title="Генерация обложек к видео и аватарок канала с помощью ИИ.", layout="wide")
 
@@ -21,11 +20,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+
 local_css('style/style.css')
+
 
 def load_lottieurl(url):
     r = requests.get(url)
@@ -36,7 +38,7 @@ def load_lottieurl(url):
 
 def creating_img():
     videos = st.file_uploader("Задача ясна! Теперь необходимо прикрепит файлу с контентом.",
-                             type="mp4", accept_multiple_files=True)
+                              type="mp4", accept_multiple_files=True)
     if videos is not None:
         for video in videos:
             st.video(video)
@@ -57,7 +59,7 @@ def creating_img():
                                              "Кулинария",
                                              "Спорт",
                                              "Новости"))
-    
+
     st.write("##")
     keywords = st.text_input("Есть ли ключевые слова, которые ты бы хотел указать в описании к видео?")
 
@@ -68,7 +70,28 @@ def creating_img():
     if images is not None:
         for image in images:
             st.image(image)
+            
 
+    st.write("##")
+    title_img = st.text_input("Хотите ли добавить надпись на готовое изображение?")
+
+    if title_img:
+        subject_matter = st.multiselect("Выберите шрифт для надписи",
+                                        options=("TimesNewRoman.ttf",
+                                                    "Georgia.ttf",
+                                                    "Arial.ttf",
+                                                    "ArialBlack.ttf",
+                                                    "Tahoma.ttf",
+                                                    "Verdana.ttf",
+                                                    "TrebuchetMS.ttf",
+                                                    "LucidaSansUnicode.ttf",
+                                                    "Impact.ttf",
+                                                    "ComicSansMS.ttf",
+                                                    "CourierNew.ttf",
+                                                    "LucidaConsole.ttf",))
+        color = st.color_picker('Выберете цвет шрифта', '#00f900')
+        add_text()
+    
     st.write("##")
     st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
 
@@ -77,13 +100,12 @@ def creating_img():
                                                                            subject_matter,
                                                                            text,
                                                                            images)
-    
+
     # тут надо вызывать
     start_btn = st.button("Начать генерацию!", on_click=gen_button_handler)
 
 
 lottie_coding = load_lottieurl("https://lottie.host/77556afe-9041-4589-87d7-adb0a2fdc4d0/aEKCuzSaHO.json")
-
 
 # --- Секция заголовков ---
 with st.container():
