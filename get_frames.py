@@ -1,6 +1,7 @@
 import os
 import sys
 import cv2
+from random import randint
 
 # Функция, которая вырезает нужные кадры и возвращает массив ссылок на них
 def get_frames(filename, out_path):
@@ -8,12 +9,12 @@ def get_frames(filename, out_path):
 
 	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 
-	step = frame_count // 5
+	step = frame_count // 4
 
 	paths = []
 
 	for i in range(4):
-		video.set(cv2.CAP_PROP_POS_FRAMES,step*(i+1))
+		video.set(cv2.CAP_PROP_POS_FRAMES,randint(step*i,step*(i+1)))
 		success, image = video.read()
 		if success:
 			imgpath = out_path + "/img" + str(i) + ".jpg"
