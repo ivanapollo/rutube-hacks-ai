@@ -10,6 +10,11 @@ st.markdown("""
 {
     visibility: hidden;
 }
+.sticky{
+  position: sticky;
+  z-index: 10;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -21,48 +26,15 @@ def load_lottieurl(url):
     return r.json()
 
 
-def creating_ava():
-    link = st.text_input("Задача ясна! Теперь необходимо прикрепит ссылку к каналу с контентом.")
+def creating_img():
+    videos = st.file_uploader("Задача ясна! Теперь необходимо прикрепит файлу с контентом.",
+                             type="mp4", accept_multiple_files=True)
+    if videos is not None:
+        for video in videos:
+            st.video(video)
 
     st.write("##")
-    st.write("Ссылка получена! Теперь к тематике канала")
-
-    subject_matter = st.multiselect("По желанию можешь выбрать тему, относящуюся к твоему контенту.",
-                                    options=("Забавные животные",
-                                             "Прохождение видеоигр",
-                                             "Руководства и туториалы",
-                                             "Сплетни о знаменитостях",
-                                             "Влог",
-                                             "Смешные видео",
-                                             "Шопинг",
-                                             "Распаковка посылок",
-                                             "Паранки",
-                                             "Кулинария",
-                                             "Спорт",
-                                             "Новости"))
-    st.write("##")
-    keywords = st.text_area("Есть ли ключевые слова, которые ты бы хотел указать в описании к каналу?")
-    st.write("##")
-    images = st.file_uploader("Можешь прикрепить желаемые картинки для твоего изображения. Они будут добавлены на фото",
-                              type=["png", "ipg"],
-                              accept_multiple_files=True)
-    if images is not None:
-        for image in images:
-            st.image(image)
-
-    st.write("##")
-    st.write("Отлино! Если ты всё загрузил! Жми кномку и лови аватарку мечты")
-    start_btn = st.button("Начать генерацию!", on_click=btn_click)
-
-
-def creating_cover():
-    video = st.file_uploader("Задача ясна! Теперь необходимо прикрепит файлу с контентом.",
-                             type="mp4")
-    if video is not None:
-        st.video(video)
-
-    st.write("##")
-    st.write("Файлы загружены! Теперь и тематике.")
+    st.write("Файлы загружены! Теперь к тематике.")
 
     subject_matter = st.multiselect("По желанию можешь выбрать тему, относящуюся к твоему контенту.",
                                     options=("Забавные животные",
@@ -81,56 +53,19 @@ def creating_cover():
     keywords = st.text_input("Есть ли ключевые слова, которые ты бы хотел указать в описании к видео?")
     st.write("##")
     images = st.file_uploader("Можешь прикрепить желаемые картинки для твоего изображения. Они будут добавлены на фото",
-                              type=["png", "ipg"],
+                              type=["png", "jpg"],
                               accept_multiple_files=True)
     if images is not None:
         for image in images:
             st.image(image)
 
     st.write("##")
-    st.write("Отлино! Если ты всё загрузил! Жми кномку и лови обложку мечты")
+    st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
     start_btn = st.button("Начать генерацию!", on_click=btn_click)
-
-
-def creating_banner():
-    link = st.text_input("Задача ясна! Теперь необходимо прикрепит ссылку к каналу с контентом.")
-
-    st.write("##")
-    st.write("Ссылка получена! Теперь к тематике канала")
-
-    subject_matter = st.multiselect("По желанию можешь выбрать тему, относящуюся к твоему контенту.",
-                                    options=("Забавные животные",
-                                             "Прохождение видеоигр",
-                                             "Руководства и туториалы",
-                                             "Сплетни о знаменитостях",
-                                             "Влог",
-                                             "Смешные видео",
-                                             "Шопинг",
-                                             "Распаковка посылок",
-                                             "Паранки",
-                                             "Кулинария",
-                                             "Спорт",
-                                             "Новости"))
-    st.write("##")
-    keywords = st.text_area("Есть ли ключевые слова, которые ты бы хотел указать в описании к каналу?")
-    st.write("##")
-    images = st.file_uploader("Можешь прикрепить желаемые картинки для твоего изображения. Они будут добавлены на фото",
-                              type=["png", "ipg"],
-                              accept_multiple_files=True)
-    if images is not None:
-        for image in images:
-            st.image(image)
-
-    st.write("##")
-    st.write("Отлино! Если ты всё загрузил! Жми кномку и лови банер мечты")
-    start_btn = st.button("Начать генерацию!", on_click=btn_click)
-
-
-def btn_click():
-    pass
 
 
 lottie_coding = load_lottieurl("https://lottie.host/77556afe-9041-4589-87d7-adb0a2fdc4d0/aEKCuzSaHO.json")
+
 
 
 # --- Секция заголовков ---
@@ -150,14 +85,22 @@ with st.container():
     task = st.radio("Для начала выбери, какую задачу нужно решить?",
                     options=("Сгенерировать обложку для видео", "Сгенерировать аватарку для канала",
                              "Сгенерировать банера для страницы канала"))
-
+creating_img()
 
 if task == "Сгенерировать обложку для видео":
-    creating_cover()
+    pass
 if task == "Сгенерировать аватарку для канала":
-    creating_ava()
+    pass
 if task == "Сгенерировать банера для страницы канала":
-    creating_banner()
+    pass
+
+lottie_loading = load_lottieurl("https://lottie.host/6056169b-b5e0-4763-803d-77e0a97e52b5/FmTPJdKcor.json")
+
+
+def btn_click(img_list):
+    st.lottie(lottie_loading, height=50)
+    for image_path in img_list:
+        st.image(image_path)
 
     contact_forms = """
 <form action="https://formsubmit.co/your@email.com" method="POST">
@@ -166,3 +109,4 @@ if task == "Сгенерировать банера для страницы ка
      <button type="submit">Send</button>
 </form>
     """
+
