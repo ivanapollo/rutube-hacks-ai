@@ -8,7 +8,7 @@ from get_frames import *
 
 api = 'http://127.0.0.1:7860'
 
-SD_MODEL = '768-v-ema.safetensors'
+SD_MODEL = 'realisticVisionV51_v51VAE2.safetensors'
 
 negp = '''two bodies, two heads, doll, extra nipples, bad anatomy, blurry, fuzzy, extra arms, extra fingers, poorly drawn hands, disfigured, tiling, deformed, mutated, out of frame, cloned face, ugly, disfigured, bad proportion, out of frame, b&w, painting, drawing, watermark, logo, text, signature, icon, monochrome, blurry, ugly, cartoon, 3d, bad_prompt, long neck, totem pole, multiple heads, multiple jaws, disfigured, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, username, artist name, ancient, character, frame, child, asian, cartoon, animation, grayscale 3d, disfigured, bad art, deformed, poorly drawn, extra limbs, strange colours, boring, sketch, lackluster, repetitive, cropped, naked, nude, disfigured, double heads, duplicated, text, oversaturated'''
 
@@ -24,8 +24,12 @@ def process(path_to_video: str,
 
     ret_list = []
 
+    topic = ''
+    for line in subject_matter:
+        topic += line
+
     for path in frame_paths:
-        gen_path = img2img(api, keywords, 15, path)
+        gen_path = img2img(api, topic + keywords, 15, path)
         ret_list.append(gen_path)
         st.image(gen_path)
 
@@ -53,7 +57,7 @@ def img2img(api, text, steps, image_path):
 
     # закодировали для сетки
     encoded_image = base64.b64encode(image_data).decode('utf-8')
-    
+
     # это то что отправляем нейросетке 
     payload = {
         'prompt' : text,
