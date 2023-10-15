@@ -9,6 +9,8 @@ from add_text import add_text
 
 import text_processing
 
+
+
 st.set_page_config(page_title="Генерация обложек к видео и аватарок канала с помощью ИИ.", layout="wide")
 
 st.markdown("""

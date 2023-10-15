@@ -51,6 +51,11 @@ def img2img(api, text, steps, image_path):
         "steps": steps,
     }
 
+    opt = requests.get(url=f'{api}/sdapi/v1/options')
+    opt_json = opt.json()
+    opt_json['sd_model_checkpoint'] = 'realisticVisionV51_v51VAE2.safetensors'
+    requests.post(url=f'{api}/sdapi/v1/options', json=opt_json)
+
     # ответ
     sd_response = requests.post(api_url, json=payload)
     
