@@ -95,17 +95,19 @@ def creating_img():
         add_text()
 
     st.write("##")
-    st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")
-
-    line = str(text_processing.text_process(keywords if keywords else 'привет', 'stopwords.txt'))
+    st.write("Отлично! Если ты всё загрузил! Жми кномку и лови обложку мечты")    
 
     # обернули вызов обработчика
     def generation_handler():
 
+        processed_text = text_processing.text_process(keywords, 'stopwords.txt')
+        prompt = str(processed_text) if processed_text else 'mathematics'
+        print(prompt)
+
         # временный файл для видео
         with NamedTemporaryFile(dir='temp', suffix='.mp4') as video:
             video.write(videos[0].getbuffer())
-            request_handling.process(video.name, subject_matter, line, images)
+            request_handling.process(video.name, subject_matter, prompt, images)
     
     # тут надо вызывать
     start_btn = st.button("Начать генерацию!", on_click=generation_handler)

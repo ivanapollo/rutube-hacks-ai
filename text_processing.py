@@ -4,7 +4,7 @@ from translatepy import Translator
 def translate(rus_text):
 	translator = Translator()
 
-	eng_text = translator.translate(rus_text, "English")
+	eng_text = translator.translate(rus_text, "English") if rus_text else ''
 
 	return eng_text
 
