@@ -63,6 +63,7 @@ def creating_img():
                                              "Кулинария",
                                              "Спорт",
                                              "Новости"))
+    print(subject_matter)
     
     st.write("##")
     keywords = st.text_input("Есть ли ключевые слова, которые ты бы хотел указать в описании к видео?")
