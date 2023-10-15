@@ -8,9 +8,9 @@ from get_frames import *
 
 api = 'http://127.0.0.1:7860'
 
-SD_MODEL = '768-v-ema.safetensors'
+# SD_MODEL = '768-v-ema.safetensors'
 
-negp = '''two bodies, two heads, doll, extra nipples, bad anatomy, blurry, fuzzy, extra arms, extra fingers, poorly drawn hands, disfigured, tiling, deformed, mutated, out of frame, cloned face, ugly, disfigured, bad proportion, out of frame, b&w, painting, drawing, watermark, logo, text, signature, icon, monochrome, blurry, ugly, cartoon, 3d, bad_prompt, long neck, totem pole, multiple heads, multiple jaws, disfigured, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, username, artist name, ancient, character, frame, child, asian, cartoon, animation, grayscale 3d, disfigured, bad art, deformed, poorly drawn, extra limbs, strange colours, boring, sketch, lackluster, repetitive, cropped, naked, nude, disfigured, double heads, duplicated, text, oversaturated'''
+# negp = '''two bodies, two heads, doll, extra nipples, bad anatomy, blurry, fuzzy, extra arms, extra fingers, poorly drawn hands, disfigured, tiling, deformed, mutated, out of frame, cloned face, ugly, disfigured, bad proportion, out of frame, b&w, painting, drawing, watermark, logo, text, signature, icon, monochrome, blurry, ugly, cartoon, 3d, bad_prompt, long neck, totem pole, multiple heads, multiple jaws, disfigured, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, username, artist name, ancient, character, frame, child, asian, cartoon, animation, grayscale 3d, disfigured, bad art, deformed, poorly drawn, extra limbs, strange colours, boring, sketch, lackluster, repetitive, cropped, naked, nude, disfigured, double heads, duplicated, text, oversaturated'''
 
 def process(path_to_video: str,
             subject_matter: list,
@@ -36,13 +36,13 @@ def process(path_to_video: str,
 
 def img2img(api, text, steps, image_path):
 
-    opt = requests.get(url=f'{api}/sdapi/v1/options')
-    opt_json = opt.json()
+    # opt = requests.get(url=f'{api}/sdapi/v1/options')
+    # opt_json = opt.json()
 
-    # TODO: тут менять модель 
-    opt_json['sd_model_checkpoint'] = SD_MODEL
+    # # TODO: тут менять модель 
+    # opt_json['sd_model_checkpoint'] = SD_MODEL
 
-    requests.post(url=f'{api}/sdapi/v1/options', json=opt_json)
+    # requests.post(url=f'{api}/sdapi/v1/options', json=opt_json)
 
     # путь до скрипта
     api_url = f"{api}/sdapi/v1/img2img"
@@ -57,7 +57,6 @@ def img2img(api, text, steps, image_path):
     # это то что отправляем нейросетке 
     payload = {
         'prompt' : text,
-        'negative_prompt': negp,
         "init_images": [encoded_image],
         "steps": steps,
     }
